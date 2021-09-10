@@ -7,4 +7,4 @@ parser.add_argument('--state', required=True, type=str, help="State you'd like t
 
 args = parser.parse_args()
 report = build_report(args.stations, args.state)
-print(report.to_json(indent=4))
+report.dump()

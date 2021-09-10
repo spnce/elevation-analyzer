@@ -5,6 +5,9 @@ from station import Station
 from dataclass_csv import DataclassReader
 from statistics import mean, median
 
+OUTPUT_FMT = "elevation_report_{state}.json"
+JSON_INDENTATION = 4
+
 @dataclass_json
 @dataclass
 class StationReport:
@@ -18,6 +21,11 @@ class StationReport:
     highest_stations: List[Station]
     lowest_stations: List[Station]
     median_stations: List[Station]
+
+    def dump(self):
+        filename = OUTPUT_FMT.format(state=self.state)
+        with open(filename, mode='w') as out_file:
+            out_file.write(self.to_json(indent=JSON_INDENTATION))
 
 
 def _open_stations(stations_file: str, state: str) -> List[Station]:
