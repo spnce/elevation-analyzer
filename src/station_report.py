@@ -28,7 +28,7 @@ def _open_stations(stations_file: str, state: str) -> List[Station]:
 def build_report(stations_file: str, state: str) -> StationReport:
     stations = _open_stations(stations_file, state)
 
-    elevations = [station.elev for station in stations]
+    elevations = [station.elev for station in stations if station.elev is not None]
     median_elevation = median(elevations)
     max_elevation = max(elevations)
     min_elevation = min(elevations)
