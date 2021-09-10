@@ -1,4 +1,5 @@
 import argparse
+from station import as_stations
 from station_report import build_report
 
 def _parse_args():
@@ -9,8 +10,10 @@ def _parse_args():
     return parser.parse_args()
 
 def _write_report(station_file: str, state: str):
-    report = build_report(station_file, state)
-    report.dump()
+    with open(station_file) as station_content:
+        stations = as_stations(station_content)
+        report = build_report(stations, state)
+        report.dump()
 
 def run():
     args = _parse_args()

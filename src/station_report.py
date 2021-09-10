@@ -1,8 +1,7 @@
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
-from typing import List
+from typing import Iterable, List
 from station import Station
-from dataclass_csv import DataclassReader
 from statistics import mean, median
 
 OUTPUT_FMT = "elevation_report_{state}.json"
@@ -29,27 +28,26 @@ class StationReport:
         print(f"Report written to {filename}")
 
 
-def _open_stations(stations_file: str, state: str) -> List[Station]:
-    with open(stations_file) as stations:
-        return [station for station in DataclassReader(stations, Station) if station.state == state]
+def _filter_stations(stations: Iterable[Station], state: str) -> List[Station]:
+    return [station for station in stations if station.state == state]
 
 
-def build_report(stations_file: str, state: str) -> StationReport:
-    stations = _open_stations(stations_file, state)
+def build_report(stations: Iterable[Station], state: str) -> StationReport:
+    state_specific = _filter_stations(stations, state)
 
-    elevations = [station.elev for station in stations if station.elev is not None]
+    elevations = [station.elev for station in state_specific if station.elev is not None]
     median_elevation = median(elevations)
     max_elevation = max(elevations)
     min_elevation = min(elevations)
 
     return StationReport(
         state=state,
-        station_count=len(stations),
+        station_count=len(state_specific),
         maximum_elevation=max_elevation,
         minimum_elevation=min_elevation,
         average_elevation=mean(elevations),
         median_elevation=median_elevation,
-        highest_stations=[station for station in stations if station.elev == max_elevation],
-        lowest_stations=[station for station in stations if station.elev == min_elevation],
-        median_stations = [station for station in stations if station.elev == median_elevation],
+        highest_stations=[station for station in state_specific if station.elev == max_elevation],
+        lowest_stations=[station for station in state_specific if station.elev == min_elevation],
+        median_stations = [station for station in state_specific if station.elev == median_elevation],
     )
