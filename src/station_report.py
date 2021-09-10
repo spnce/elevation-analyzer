@@ -26,6 +26,7 @@ class StationReport:
         filename = OUTPUT_FMT.format(state=self.state)
         with open(filename, mode='w') as out_file:
             out_file.write(self.to_json(indent=JSON_INDENTATION))
+        print(f"Report written to {filename}")
 
 
 def _open_stations(stations_file: str, state: str) -> List[Station]:
