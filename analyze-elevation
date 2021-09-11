@@ -1,3 +1,4 @@
 #!/bin/bash
 
+pipenv sync
 pipenv run python3 -m src.main $@
