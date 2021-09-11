@@ -4,6 +4,7 @@ from dataclass_csv import DataclassReader
 from io import TextIOWrapper
 from typing import Iterable
 
+
 @dataclass_json
 @dataclass
 class Station:

@@ -4,8 +4,10 @@ from typing import Iterable, List
 from .station import Station
 from statistics import mean, median
 
+
 OUTPUT_FMT = "elevation_report_{state}.json"
 JSON_INDENTATION = 4
+
 
 @dataclass_json
 @dataclass
