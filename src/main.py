@@ -1,6 +1,6 @@
 import argparse
-from station import as_stations
-from station_report import build_report
+from .station import as_stations
+from .station_report import build_report
 
 def _parse_args():
     parser = argparse.ArgumentParser(prog="analyze-elevation", description="Analyze climate station elevation by state.")

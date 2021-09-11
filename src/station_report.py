@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from typing import Iterable, List
-from station import Station
+from .station import Station
 from statistics import mean, median
 
 OUTPUT_FMT = "elevation_report_{state}.json"
