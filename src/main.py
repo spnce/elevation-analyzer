@@ -1,6 +1,6 @@
 import argparse
 from .station import as_stations
-from .station_report import build_report
+from .station_report import build_report, StationReport
 
 
 def _parse_args():
@@ -11,17 +11,17 @@ def _parse_args():
     return parser.parse_args()
 
 
-def _write_report(station_file: str, state: str):
+def _create_report(station_file: str, state: str) -> StationReport:
     with open(station_file) as station_content:
         stations = as_stations(station_content)
-        report = build_report(stations, state)
-        report.dump()
+        return build_report(stations, state)
 
 
 def run():
     args = _parse_args()
     try:
-        _write_report(args.stations, args.state)
+        report = _create_report(args.stations, args.state)
+        report.dump()
     except Exception as e:
         print(e)
 
