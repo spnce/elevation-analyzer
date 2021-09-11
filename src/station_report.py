@@ -35,6 +35,9 @@ def _filter_stations(stations: Iterable[Station], state: str) -> List[Station]:
 def build_report(stations: Iterable[Station], state: str) -> StationReport:
     state_specific = _filter_stations(stations, state)
 
+    if len(state_specific) == 0:
+        raise ValueError(f"No stations found in {state}")
+
     elevations = [station.elev for station in state_specific if station.elev is not None]
     median_elevation = median(elevations)
     max_elevation = max(elevations)
