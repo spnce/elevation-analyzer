@@ -12,6 +12,8 @@ JSON_INDENTATION = 4
 @dataclass_json
 @dataclass
 class StationReport:
+    """Aggregated information about a state's climate stations."""
+
     state: str
     station_count: int
     maximum_elevation: float
@@ -24,6 +26,8 @@ class StationReport:
     median_stations: List[Station]
 
     def dump(self):
+        """Print the report to a json file."""
+
         filename = OUTPUT_FMT.format(state=self.state)
         with open(filename, mode='w') as out_file:
             out_file.write(self.to_json(indent=JSON_INDENTATION))
