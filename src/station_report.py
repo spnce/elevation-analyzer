@@ -29,7 +29,7 @@ class StationReport:
 
 
 def _filter_stations(stations: Iterable[Station], state: str) -> List[Station]:
-    return [station for station in stations if station.state == state]
+    return [station for station in stations if station.state.upper() == state.upper()]
 
 
 def build_report(stations: Iterable[Station], state: str) -> StationReport:
@@ -44,7 +44,7 @@ def build_report(stations: Iterable[Station], state: str) -> StationReport:
     min_elevation = min(elevations)
 
     return StationReport(
-        state=state,
+        state=state.upper(),
         station_count=len(state_specific),
         maximum_elevation=max_elevation,
         minimum_elevation=min_elevation,

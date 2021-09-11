@@ -91,6 +91,24 @@ class TestStationReport(unittest.TestCase):
         self.assertCountEqual(report.highest_stations, [station])
 
 
+    def case_insensitive(self):
+        station = [self._gen_station(42, "CA")]
+        report = build_report(station, "ca")
+
+        self.assertEqual(report.state, "CA")
+        self.assertEqual(report.station_count, 1)
+        self.assertEqual(report.maximum_elevation, 42)
+        self.assertEqual(report.minimum_elevation, 42)
+        self.assertEqual(report.average_elevation, 42)
+        self.assertEqual(report.median_elevation, 42)
+
+        # terribly named test function; assertCountEqual checks that
+        # two collections contain the same elements in any order
+        self.assertCountEqual(report.median_stations, station)
+        self.assertCountEqual(report.lowest_stations, station)
+        self.assertCountEqual(report.highest_stations, station)
+
+
     def test_empty(self):
         stations = []
         with self.assertRaises(ValueError):
